@@ -14,7 +14,7 @@ This is a simple application that allows you to register candidate borrowers int
     * NOTE: the `file` argument represents the "filename" (e.g., `borrowers/candidates.json`)
 5. Add your implementation, run the examples on the `execution` section, and push to github.
     * Files: `main.py`, `models.py`, and `candidates.json`
-6. Create a branch from `HW-BORROWERS` into `solutions`.
+6. Create a PR from `HW-BORROWERS` into `solutions`.
 
 Consider that there are two relevant `updated_at` fields:
 * Top level `updated_at`: this represents when the file has been updated, and should be modified anytime there's an
