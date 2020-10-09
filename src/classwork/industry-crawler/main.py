@@ -67,7 +67,3 @@ class Main:
         # Filter levels
         data = self._keep_level(industry=data, until=until)
         return json.dumps(data, indent=4)
-
-
-
-
