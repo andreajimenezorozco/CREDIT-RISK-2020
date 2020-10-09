@@ -13,7 +13,6 @@ from .settings import (
 
 logger = get_logger(name=__name__)
 
-
 class Main:
     DEFAULT_URL = INDUSTRY_CRAWLER_URL
     DEFAULT_OUTPUT_FILE = INDUSTRY_CRAWLER_OUTPUT_FILE
