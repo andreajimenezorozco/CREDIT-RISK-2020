@@ -13,6 +13,7 @@ from .settings import (
 
 logger = get_logger(name=__name__)
 
+
 class Main:
     DEFAULT_URL = INDUSTRY_CRAWLER_URL
     DEFAULT_OUTPUT_FILE = INDUSTRY_CRAWLER_OUTPUT_FILE
@@ -66,3 +67,7 @@ class Main:
         # Filter levels
         data = self._keep_level(industry=data, until=until)
         return json.dumps(data, indent=4)
+
+
+
+
