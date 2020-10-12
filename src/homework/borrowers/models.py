@@ -35,4 +35,3 @@ class Borrower:
     def update(self, file: str):
         # TODO: update the borrower on the json file that match the email of the current borrower.
         pass
-    
