@@ -23,7 +23,6 @@ class Borrower:
         }
 
     def save(self, file: str):
-        # TODO: save the borrower into the json file!
         with open("./borrowers/candidates.json") as f:
             data = json.load(f)
         data["candidates"].append(self.to_json())
@@ -33,7 +32,6 @@ class Borrower:
             f.write(json.dumps(data, indent=4))
 
     def update(self, file: str):
-        # TODO: update the borrower on the json file that match the email of the current borrower.
         with open("./borrowers/candidates.json") as f:
             data = json.load(f)
         for dec in data['candidates']:
