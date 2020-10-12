@@ -34,4 +34,13 @@ class Borrower:
 
     def update(self, file: str):
         # TODO: update the borrower on the json file that match the email of the current borrower.
-        pass
+        with open("./borrowers/candidates.json") as f:
+            data = json.load(f)
+        for dec in data['candidates']:
+            if dec["email"] == self.email:
+                dec["age"] = self.age
+                dec["income"] = self.income
+
+        with open("./borrowers/candidates.json", 'w') as f:
+            f.write(json.dumps(data, indent=4))
+
