@@ -24,4 +24,3 @@ class Main:
     def insert(email: str, age: int, income: float, file: str = DEFAULT_FILENAME):
         borrower = Borrower(email=email, age=age, income=income)
         borrower.save(file=file)
-
