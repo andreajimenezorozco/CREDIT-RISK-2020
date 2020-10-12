@@ -19,7 +19,7 @@ class Borrower:
             "age": self.age,
             "income": self.income,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
         }
 
     def save(self, file: str):
