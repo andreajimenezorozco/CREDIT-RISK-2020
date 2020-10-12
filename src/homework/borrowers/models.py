@@ -43,4 +43,3 @@ class Borrower:
 
         with open("./borrowers/candidates.json", 'w') as f:
             f.write(json.dumps(data, indent=4))
-
