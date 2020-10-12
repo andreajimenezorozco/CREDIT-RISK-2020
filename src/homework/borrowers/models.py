@@ -14,12 +14,22 @@ class Borrower:
         self.income = income
 
     def to_json(self) -> Dict:
-        # TODO: return a json with the: email, age, income, created_at, and updated_at
-        pass
+        return {
+            "email":self.email,
+            "age": self.age,
+            "income": self.income,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
 
     def save(self, file: str):
-        # TODO: save the borrower into the json file!
-        pass
+        with open("./borrowers/candidates.json") as f:
+            data = json.load(f)
+        data["candidates"].append(self.to_json())
+        data["updated_at"] = self.updated_at
+
+        with open("./borrowers/candidates.json", 'w') as f:
+            f.write(json.dumps(data, indent=4))
 
     def update(self, file: str):
         # TODO: update the borrower on the json file that match the email of the current borrower.
