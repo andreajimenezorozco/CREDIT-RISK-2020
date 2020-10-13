@@ -42,4 +42,4 @@ class Borrower:
                 dec["income"] = self.income
 
         with open("./borrowers/candidates.json", 'w') as f:
-            f.write(json.dumps(data, indent=4))
+            f.write(json.dumps(data, indent=4)
