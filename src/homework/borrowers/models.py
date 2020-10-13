@@ -6,7 +6,7 @@ from .utils import get_current_utc
 
 class Borrower:
 
-    def _init_(self, email: str, age: int, income: float):
+    def __init__(self, email: str, age: int, income: float):
         self.created_at = get_current_utc()
         self.updated_at = self.created_at
         self.email = email
@@ -23,6 +23,7 @@ class Borrower:
         }
 
     def save(self, file: str):
+        # TODO: save the borrower into the json file!
         with open("./borrowers/candidates.json") as f:
             data = json.load(f)
         data["candidates"].append(self.to_json())
@@ -32,6 +33,7 @@ class Borrower:
             f.write(json.dumps(data, indent=4))
 
     def update(self, file: str):
+        # TODO: update the borrower on the json file that match the email of the current borrower.
         with open("./borrowers/candidates.json") as f:
             data = json.load(f)
         for dec in data['candidates']:
