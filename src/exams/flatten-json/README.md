@@ -1,5 +1,7 @@
 # EX01: Flatten JSON
 
+This is the practical section of the first exam.
+
 ## Instructions
 
 1. [Sync your repository](https://www.youtube.com/watch?v=59PaqRdbCx8&list=PLIbTa97DHk7jHdOW7Jb2dozV59bOWc58O&index=7)!
@@ -207,6 +209,6 @@ $ python -m flatten-json flatten --file flatten-json/ex-5.json
 }
 ```
 
-**(5 pts)Secret tests**
+**(5 pts) Secret tests**
 
 Your code will also be tested against a set of secret tests.
