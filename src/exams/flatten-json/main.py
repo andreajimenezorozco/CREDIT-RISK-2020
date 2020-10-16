@@ -1,11 +1,12 @@
 import json
+
 from .utils import flatten_dict
 from fintools.settings import get_logger
 
 logger = get_logger(name="__main__")
 
 
-class Main:
+class Main(object):
     @staticmethod
     def show(self, file):
         logger.info("Calling the show method.")
@@ -14,7 +15,7 @@ class Main:
         return content
 
     @staticmethod
-    def flatten(self, file):
+    def flatten(file):
         with open(file, "r") as f:
             example = json.loads(f.read())
         return flatten_dict(example)
