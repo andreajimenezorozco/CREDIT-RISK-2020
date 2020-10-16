@@ -1,21 +1,24 @@
 import json
 
 
-def flatten_dict(dicc):
+def flatten_dict(fun_json):
     res = {}
-    def flatten(dicc, character=''):
-        if type(dicc) is dict:
-            for args in dicc:
-                flatten(dicc[args], character + args + '.')
-        elif type(dicc) is list:
+
+    def flatten(dic1, character=''):
+
+        if type(dic1) is dict:
+            for args in dic1:
+                flatten(dic1[args], character + args + '.')
+        elif type(dic1) is list:
             i = 0
-            for args in dicc:
+            for args in dic1:
                 flatten(args, character + str(i) + '.')
                 i += 1
         else:
-            res[character[:-1]] = dicc
+            res[character[:-1]] = dic1
 
-    flatten(dicc)
-    return json.dumps(res, indent=3, sort_keys=True)
+    flatten(fun_json)
+    return json.dumps(res, indent=2, sort_keys=True)
+
 
 
