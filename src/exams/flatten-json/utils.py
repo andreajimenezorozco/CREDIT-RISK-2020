@@ -1,20 +1,4 @@
 import json
-import functools
-
-
-def good_format(logger, serializer_function=lambda obj: obj.__dict__):
-    def putting_format(func):
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            first_value = func(*args, **kwargs)
-            try:
-                last_value = json.dumps(first_value, indent=4, default=serializer_function)
-                return last_value
-            except TypeError:
-                logger.error("Type Error {error}".format(error=TypeError))
-                raise
-        return wrapper
-    return putting_format
 
 
 def flatten_dict(fun_json):
@@ -33,5 +17,4 @@ def flatten_dict(fun_json):
         else:
             res[character[:-1]] = dic1
     flatten(fun_json)
-    return fun_json
-
+    return json.dumps(res, indent=3, sort_keys=True)
