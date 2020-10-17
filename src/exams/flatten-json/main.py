@@ -1,5 +1,4 @@
 import json
-
 from .utils import good_format
 from .utils import flatten_dict
 from fintools.settings import get_logger
@@ -16,6 +15,7 @@ class Main(object):
         return content
 
     @staticmethod
+    @good_format
     def flatten(file):
         with open(file, "r") as f:
             example = json.loads(f.read())
