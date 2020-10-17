@@ -1,5 +1,6 @@
 import json
 
+from .utils import good_format
 from .utils import flatten_dict
 from fintools.settings import get_logger
 
@@ -7,7 +8,7 @@ logger = get_logger(name="__main__")
 
 
 class Main(object):
-
+    @good_format
     def show(self, file):
         logger.info("Calling the show method.")
         with open(file, "r") as f:
