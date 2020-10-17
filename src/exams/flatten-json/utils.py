@@ -2,7 +2,7 @@ import json
 import functools
 
 
-def good_format(logger, serializer_function=lambda obj: obj.dict):
+def good_format(logger, serializer_function=lambda obj: obj.__dict__):
     def putting_format(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -32,8 +32,6 @@ def flatten_dict(fun_json):
                 i += 1
         else:
             res[character[:-1]] = dic1
-
+    flatten(fun_json)
     return fun_json
-
-
 
