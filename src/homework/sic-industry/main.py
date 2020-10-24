@@ -1,20 +1,18 @@
-import os
+import logging
 import json
-from typing import Dict
+import fire
 
-from fintools.settings import get_logger
-from fintools.utils import StringWrapper, timeit
-
-from .settings import (
-    INDUSTRY_SEARCH_DEFAULT_FILENAME,
-    INDUSTRY_SEARCH_DEFAULT_THRESHOLD
-)
-
-logger = get_logger(name=__name__)
+from model import SIC
+from util import StringWrapper, pretty_print, timeit
 
 
-class Main:
-    threshold = INDUSTRY_SEARCH_DEFAULT_THRESHOLD
+URL = "https://www.osha.gov/pls/imis/sic_manual.html"
+DEFAULT_INDUSTRY_FILE = "industries.json"
+
+logger = logging.getLogger(__name__)
+
+
+class Main(object):
 
     def _recursive_search(self, node, string_wrapper, exact):
         title = node["title"]
@@ -27,16 +25,30 @@ class Main:
                 new_children.append(child)
 
         node["children"] = new_children
-        search = len(new_children) or string_wrapper.boolean_search(title, reverse=True, exact=exact)
-        return search
+        succesful_search = len(new_children) or string_wrapper.boolean_search(title, reverse=True, exact=exact)
+        return succesful_search
+
+    @staticmethod
+    @timeit(logger)
+    def download(filename=DEFAULT_INDUSTRY_FILE):
+        logger.info("Starting download procedure...")
+        sic = SIC.from_url(URL)
+        with open(filename, "w") as file:
+            file.write(sic.jsonify())
 
     @timeit(logger)
-    def search(self, title: str, exact: bool = False, filename: str = INDUSTRY_SEARCH_DEFAULT_FILENAME):
+    @pretty_print(logger)
+    def search(self, title, exact=False, filename=DEFAULT_INDUSTRY_FILE):
         target_tittle = StringWrapper(value=title)
-        sic_industries = json.loads(filename)
+        sic_industries = SIC.load_json(filename)
         children = sic_industries["children"]
         new_children = []
         for child in children:
             if self._recursive_search(child, target_tittle, exact=exact):
                 new_children.append(child)
         return new_children
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    fire.Fire(Main)
