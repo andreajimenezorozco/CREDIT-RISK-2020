@@ -1,50 +1,49 @@
-import logging
 import json
-import fire
 
-from model import SIC
-from util import StringWrapper, pretty_print, timeit
+from fintools.settings import get_logger
+from fintools.utils import StringWrapper, timeit
+
+from .settings import (
+    INDUSTRY_SEARCH_DEFAULT_FILENAME,
+    INDUSTRY_SEARCH_DEFAULT_THRESHOLD
+)
+from .settings import good_format
+
+logger = get_logger(name=__name__)
 
 
-URL = "https://www.osha.gov/pls/imis/sic_manual.html"
-DEFAULT_INDUSTRY_FILE = "industries.json"
+class Main:
+    threshold = INDUSTRY_SEARCH_DEFAULT_THRESHOLD
 
-logger = logging.getLogger(__name__)
+    @staticmethod
+    def load_json(filename=INDUSTRY_SEARCH_DEFAULT_FILENAME):
+        with open(filename, "r") as f:
+            sic_industry = json.loads(f.read())
+        return sic_industry
 
-
-class Main(object):
-
-    def _recursive_search(self, node, string_wrapper, exact):
+    def recursive_search(self, node, string_wrapper, exact):
         title = node["title"]
         children = node["children"]
         new_children = []
 
         for child in children:
-            is_child_valid = self._recursive_search(child, string_wrapper, exact=exact)
+            is_child_valid = self.recursive_search(child, string_wrapper, exact=exact)
             if is_child_valid:
                 new_children.append(child)
-
         node["children"] = new_children
-        succesful_search = len(new_children) or string_wrapper.boolean_search(title, reverse=True, exact=exact)
-        return succesful_search
+        result = len(new_children) or string_wrapper.boolean_search(title, threshold=INDUSTRY_SEARCH_DEFAULT_THRESHOLD,
+                                                                    reverse=True, exact=exact)
+        return result
 
-    @staticmethod
-    @timeit(logger)
-    def download(filename=DEFAULT_INDUSTRY_FILE):
-        logger.info("Starting download procedure...")
-        sic = SIC.from_url(URL)
-        with open(filename, "w") as file:
-            file.write(sic.jsonify())
-
-    @timeit(logger)
-    @pretty_print(logger)
-    def search(self, title, exact=False, filename=DEFAULT_INDUSTRY_FILE):
+    @timeit(logger=logger)
+    @good_format(logger)
+    def search(self, title: str, exact: bool = False, file: str = INDUSTRY_SEARCH_DEFAULT_FILENAME):
         target_tittle = StringWrapper(value=title)
-        sic_industries = SIC.load_json(filename)
+        sic_industries = self.load_json(file)
         children = sic_industries["children"]
         new_children = []
         for child in children:
-            if self._recursive_search(child, target_tittle, exact=exact):
+            if self.recursive_search(child, target_tittle, exact=exact):
                 new_children.append(child)
         return new_children
 
@@ -52,3 +51,4 @@ class Main(object):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     fire.Fire(Main)
+
